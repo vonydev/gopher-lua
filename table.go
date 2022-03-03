@@ -221,6 +221,15 @@ func (tb *LTable) RawSetString(key string, value LValue) {
 	}
 }
 
+// Reset empties the LTable
+func (tb *LTable) Reset() {
+	for idx := range tb.keys {
+		delete(tb.strdict, tb.keys[idx].String())
+		delete(tb.k2i, tb.keys[idx])
+	}
+	tb.keys = tb.keys[:0]
+}
+
 // RawSetH sets a given LValue to a given index without the __newindex metamethod.
 func (tb *LTable) RawSetH(key LValue, value LValue) {
 	if s, ok := key.(LString); ok {
